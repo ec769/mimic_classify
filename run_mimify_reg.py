@@ -96,7 +96,7 @@ def get_args():
 
 if __name__ == "__main__":
     folder_path,dx,dy,dz,numfile,nthread,deep,maxepoch,bsize,rfile,normalized,DIM,dc,nh,nl,dr = get_args()
-    print 'Normalized Commandline: ', 
+    print('Normalized Commandline: ',) 
     if normalized == 1:
         temp = True
     else:
@@ -108,11 +108,11 @@ if __name__ == "__main__":
 
     params = {'nhid':nh,'nlayers':nl,'dropout':dr}
     normalized= temp
-    print normalized
+    print(normalized)
     pvalues = []
     d = np.load(folder_path + 'datafile.npy')
     for i in range(numfile):
-        print '#iter: ' + str(i)
+        print('#iter: ' + str(i))
         datafile = folder_path  + 'datafile' + str(i) + '_' + str(dz) + '.csv'
         y = pd.read_csv(datafile,header = None)
         y = np.array(y).astype(np.float32)
@@ -121,7 +121,7 @@ if __name__ == "__main__":
         MCR = MIMIFY_REG(y[:,0:dx],y[:,dx:dx+dy],y[:,dx+dy:dx+dy+dz],\
                  normalized=normalized,nthread = nthread, deep = deep, max_epoch = maxepoch, bsize = bsize,DIM = DIM,deep_classifier=deepclassifier,params = params)
         pvalues = pvalues + [MCR.CI_classify()] 
-        print i,d[i],pvalues[-1]
+        print(i,d[i],pvalues[-1])
 
         np.save(folder_path + rfile + '.npy' ,pvalues)
 

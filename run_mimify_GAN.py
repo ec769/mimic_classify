@@ -109,7 +109,7 @@ if __name__ == "__main__":
     pvalues = []
     d = np.load(folder_path + 'datafile.npy')
     for i in range(numfile):
-        print '#iter: ' + str(i)
+        print('#iter: ' + str(i))
         datafile = folder_path  + 'datafile' + str(i) + '_' + str(dz) + '.csv'
         y = pd.read_csv(datafile,header = None)
         y = np.array(y).astype(np.float32)
@@ -118,7 +118,7 @@ if __name__ == "__main__":
         MCG = MIMIFY_GAN(y[:,0:dx],y[:,dx:dx+dy],y[:,dx+dy:dx+dy+dz],\
                  normalized=normalized,nthread = nthread, dim_N = dim_N, max_epoch = maxepoch, bsize = bsize,deep_classifier=deepclassifier,params = params)
         pvalues = pvalues + [MCG.CI_classify()] 
-        print i,d[i],pvalues[-1]
+        print(i,d[i],pvalues[-1])
 
         np.save(folder_path + rfile + '.npy' ,pvalues)
 

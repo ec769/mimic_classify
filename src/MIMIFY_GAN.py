@@ -84,9 +84,9 @@ class Discriminator_original(nn.Module):
 def train_conditional_gan_original(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,option = 1,normalized = False):
     n = data.shape[0]
     max_iter = max_epoch*n/BSIZE + 1
-    print 'MAX ITER: ' + str(max_iter)
-    print 'in train GAN',
-    print normalized
+    print('MAX ITER: ' + str(max_iter))
+    print('in train GAN',)
+    print(normalized)
     Data = data_iterator(dx=dim_X,dy=dim_Y,dz=dim_Z,bsize = BSIZE,nstd = 0.5,data = data,normalized=normalized)
     netG = Generator(dim_N,dim_Y,dim_Z,dim_Z+dim_N)
     netD = Discriminator_original(dim_X,dim_Y,dim_Z,dim_Z+dim_Y)
@@ -109,7 +109,7 @@ def train_conditional_gan_original(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZ
         one = one.cuda()
         mone = mone.cuda()
     Wloss = []
-    print netG, next(netG.parameters()).is_cuda
+    print(netG, next(netG.parameters()).is_cuda)
     for iteration in xrange(max_iter):
         ############################
         # (1) Update D network
@@ -173,9 +173,9 @@ def train_conditional_gan_original(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZ
             optimizerG.step()
 
             if iteration % 100 == 99:
-                print 'Iter#: ' + str(iteration)
-                print 'loss:',
-                print np.mean(Wloss[-99:])
+                print('Iter#: ' + str(iteration))
+                print('loss:',)
+                print(np.mean(Wloss[-99:]))
     if use_cuda:
         return netG.cpu(),netD.cpu()
     return netG,netD
@@ -192,8 +192,8 @@ def CI_sampler_conditional_CGAN(X_in,Y_in,Z_in,param_dict):
     option = param_dict['option'] #1
     dim_N = param_dict['dim_N']
     normalized = param_dict['normalized']
-    print 'in CI Sampler',
-    print normalized
+    print('in CI Sampler',)
+    print(normalized)
     if normalized:
         X_in = scale(X_in,axis = 0,with_mean = False)
         Y_in = scale(Y_in,axis = 0,with_mean = False)

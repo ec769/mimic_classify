@@ -113,8 +113,8 @@ class CI_base(object):
             pred_exact = np.argmax(pred,axis =1)
             acc2 = accuracy_score(Ytest, pred_exact)
             AUC2 = roc_auc_score(Ytest,pred[:,1])
-            print 'Using Deep Model: ',
-            print gbm
+            print('Using Deep Model: ',)
+            print(gbm)
             del gbm
         else:
             model,features,bp = XGB_crossvalidated_model(max_depths=self.max_depths, n_estimators=self.n_estimators, \
@@ -131,13 +131,13 @@ class CI_base(object):
             pred_exact = np.argmax(pred,axis =1)
             acc2 = accuracy_score(Ytest, pred_exact)
             AUC2 = roc_auc_score(Ytest,pred[:,1])
-            print 'Using XGB model: '
-            print gbm
+            print('Using XGB model: ')
+            print(gbm)
             del gbm
         
         x = [0.0, AUC1 - AUC2 , AUC2 - 0.5, acc1 - acc2, acc2 - 0.5]
-        print 'AC_w_x: ' + str(AUC1),
-        print 'AC_no_x: ' + str(AUC2)
+        print('AC_w_x: ' + str(AUC1),)
+        print('AC_no_x: ' + str(AUC2))
         y = max(x[1],x[3])
         sigma = 1.0/np.sqrt(self.nx)
         return pvalue(x[1],sigma)

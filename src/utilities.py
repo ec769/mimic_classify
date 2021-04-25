@@ -76,15 +76,15 @@ class data_iterator(object):
         #print normalized
         if normalized is True:
             self.dataset = scale(self.dataset,axis = 0,with_mean = False)
-            print 'Std. Normalized Dataset'
+            print('Std. Normalized Dataset')
         s = self.dataset.shape
         self.index = 0
         self.bsize = bsize
         self.size = s[0]
         self.channel = channel
-        print 'Initialized Iterator'
-        print 'Data Size: ' + str(self.size)
-        print 'Batch Size: ' + str(self.bsize)
+        print('Initialized Iterator')
+        print('Data Size: ' + str(self.size))
+        print('Batch Size: ' + str(self.bsize))
     def next_batch(self):
         if self.index + self.bsize >= self.size:
             self.index = 0

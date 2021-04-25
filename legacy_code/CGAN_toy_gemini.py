@@ -189,19 +189,19 @@ class data_iterator(object):
                 X = np.random.multivariate_normal(np.zeros(dx),np.eye(dx),size)
                 Y = 2*X*Axy + Z*Ay + nstd*np.random.multivariate_normal(np.zeros(dy),np.eye(dy),size)
             self.dataset = np.array(np.hstack([X,Y,Z])).astype(np.float32)
-        print normalized
+        print(normalized)
         if normalized is True:
             #self.dataset = normalize(self.dataset,axis = 1)
             self.dataset = scale(self.dataset,axis = 0)
-            print 'l2 Normalized Dataset'
+            print('l2 Normalized Dataset')
         s = self.dataset.shape
         self.index = 0
         self.bsize = bsize
         self.size = s[0]
         self.channel = channel
-        print 'Initialized Iterator'
-        print 'Data Size: ' + str(self.size)
-        print 'Batch Size: ' + str(self.bsize)
+        print('Initialized Iterator')
+        print('Data Size: ' + str(self.size))
+        print('Batch Size: ' + str(self.bsize))
     def next_batch(self):
         if self.index + self.bsize >= self.size:
             self.index = 0
@@ -258,12 +258,12 @@ def calc_gradient_penalty_simple(netD, real_data_X, real_data_Y, real_data_Z, fa
 def train_conditional_gan(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,option = 1):
     n = data.shape[0]
     max_iter = max_epoch*n/BSIZE + 1
-    print max_iter
+    print(max_iter)
     Data = data_iterator(dx=dim_X,dy=dim_Y,dz=dim_Z,sType = 'CI',size = 10000,bsize = BSIZE,nstd = 0.5,fixed_z = False,data = data)
     netG = Generator(dim_N,dim_Y,dim_Z,dim_Z+dim_N)
     netD = Discriminator(dim_X,dim_Y,dim_Z,dim_X + dim_Z+ dim_Y)
-    print netG
-    print netD
+    print(netG)
+    print(netD)
     netD.apply(weights_init)
     netG.apply(weights_init)
 
@@ -354,9 +354,9 @@ def train_conditional_gan(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,option 
             optimizerG.step()
             
             if iteration % 100 == 99:
-                print 'iter#: ' + str(iteration)
-                print 'Wloss:',
-                print np.mean(Wloss[-99:])
+                print('iter#: ' + str(iteration))
+                print('Wloss:',)
+                print(np.mean(Wloss[-99:]))
                 
     return netG,netD
 
@@ -368,8 +368,8 @@ def train_conditional_gan_simple(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,
     Data = data_iterator(dx=dim_X,dy=dim_Y,dz=dim_Z,sType = 'CI',size = 10000,bsize = BSIZE,nstd = 0.5,fixed_z = False,data = data,normalized=normalized)
     netG = Generator(dim_N,dim_Y,dim_Z,dim_Z+dim_N)
     netD = Discriminator_simple(dim_X,dim_Y,dim_Z,dim_Z+dim_Y)
-    print netG
-    print netD
+    print(netG)
+    print(netD)
     netD.apply(weights_init)
     netG.apply(weights_init)
     
@@ -458,9 +458,9 @@ def train_conditional_gan_simple(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,
             optimizerG.step()
             
             if iteration % 100 == 99:
-                print 'iter#: ' + str(iteration)
-                print 'Wloss:',
-                print np.mean(Wloss[-99:])
+                print('iter#: ' + str(iteration))
+                print('Wloss:',)
+                print(np.mean(Wloss[-99:]))
                 
     if use_cuda:
         return netG.cpu(),netD.cpu()
@@ -470,13 +470,13 @@ def train_conditional_gan_simple(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,
 def train_conditional_gan_original(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,option = 1,normalized = False):
     n = data.shape[0]
     max_iter = max_epoch*n/BSIZE + 1
-    print max_iter
+    print(max_iter)
     Data = data_iterator(dx=dim_X,dy=dim_Y,dz=dim_Z,sType = 'CI',size = 10000,bsize = BSIZE,nstd = 0.5,fixed_z = False,data = data,normalized=normalized)
     netG = Generator(dim_N,dim_Y,dim_Z,dim_Z+dim_N)
     netD = Discriminator_original(dim_X,dim_Y,dim_Z,dim_Z+dim_Y)
     criterion = nn.BCELoss()
-    print netG
-    print netD
+    print(netG)
+    print(netD)
     netD.apply(weights_init)
     netG.apply(weights_init)
     
@@ -561,9 +561,9 @@ def train_conditional_gan_original(data,dim_N,dim_X,dim_Y,dim_Z, max_epoch, BSIZ
             optimizerG.step()
             
             if iteration % 100 == 99:
-                print 'iter#: ' + str(iteration)
-                print 'Wloss:',
-                print np.mean(Wloss[-99:])
+                print('iter#: ' + str(iteration))
+                print('Wloss:',)
+                print(np.mean(Wloss[-99:]))
                 
     if use_cuda:
         return netG.cpu(),netD.cpu()
@@ -594,7 +594,7 @@ def CI_sampler_conditional_CGAN(X_in,Y_in,Z_in,train_len = -1,max_epoch=50,BSIZE
 
     samples = np.hstack([X_in,Y_in,Z_in]).astype(np.float32)
     if normalized:
-        print 'In Sampler Normalized'
+        print('In Sampler Normalized')
         #samples = normalize(samples,axis = 1)
         samples = scale(samples,axis = 0)
 
@@ -959,7 +959,7 @@ def DCIT_GAN(X,Y,Z,train_samp = -1,max_epoch=100,bsize=50,n_bootstrap = 20,dim_N
     Wloss = D_real - D_fake
     Wloss = Wloss.data.numpy()[0]
 
-    print 'Final Test Wloss:' + str(Wloss)
+    print('Final Test Wloss:' + str(Wloss))
     
     loss_list = []
     atall = np.vstack([at1_noy,at2_noy])
@@ -1006,8 +1006,8 @@ def DCIT_GAN(X,Y,Z,train_samp = -1,max_epoch=100,bsize=50,n_bootstrap = 20,dim_N
 
     mu = np.mean(loss_list)
     std = np.std(loss_list)
-    print 'mean: ' + str(mu)
-    print 'std: ' + str(std)
+    print('mean: ' + str(mu))
+    print('std: ' + str(std))
 
     return pvalue(Wloss - mu,std)
 

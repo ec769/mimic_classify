@@ -55,8 +55,8 @@ class Regressor(nn.Module):
 def train_regressor(data,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,option = 1, normalized = False,DIM = 20):
     n = data.shape[0]
     max_iter = max_epoch*n/BSIZE + 1
-    print 'MAX ITER: ' + str(max_iter)
-    print 'in train REG'
+    print('MAX ITER: ' + str(max_iter))
+    print('in train REG')
     Data = data_iterator(dx=dim_X,dy=dim_Y,dz=dim_Z,bsize = BSIZE,nstd = 0.5,data = data,normalized=normalized)
     netG = Regressor(dim_Y,dim_Z,DIM)
     netG.apply(weights_init)
@@ -89,9 +89,9 @@ def train_regressor(data,dim_X,dim_Y,dim_Z, max_epoch, BSIZE,option = 1, normali
 	else:
 		Wloss = Wloss + [G_fake_error.data.numpy()[0]]
         if iteration % 100 == 99:
-            print 'Iter#: ' + str(iteration)
-            print 'loss:',
-            print np.mean(Wloss[-99:])
+            print('Iter#: ' + str(iteration))
+            print('loss:',)
+            print(np.mean(Wloss[-99:]))
     
     if use_cuda:
         return netG.cpu()
@@ -107,7 +107,7 @@ def CI_sampler_regressor(X_in,Y_in,Z_in,param_dict):
     n_estimators = param_dict['n_estimators']
     noise = param_dict['noise']
     normalized = param_dict['normalized']
-    print noise
+    print(noise)
     perc = param_dict['perc']
 
     if normalized:
@@ -149,8 +149,8 @@ def CI_sampler_regressor(X_in,Y_in,Z_in,param_dict):
         Y1hat = MOR.predict(Z1)
         cov = np.cov(np.transpose(Y1hat - Y1))
 
-        print 'Calculated Covariance: ',
-        print cov 
+        print('Calculated Covariance: ',)
+        print(cov)
 
         Yprime = MOR.predict(Z2)
         n2,n22 = data2.shape
@@ -187,8 +187,8 @@ def CI_sampler_regressor(X_in,Y_in,Z_in,param_dict):
         Y1hat = MOR.predict(Z1)
         cov = np.cov(np.transpose(Y1hat - Y1))
 
-        print 'Calculated Covariance: '
-        print cov 
+        print('Calculated Covariance: ')
+        print(cov)
 
         Yprime = MOR.predict(Z2)
         n2,n22 = data2.shape
@@ -264,7 +264,7 @@ def CI_sampler_regressor_v2(X_in,Y_in,Z_in,param_dict):
     n_estimators = param_dict['n_estimators']
     noise = param_dict['noise']
     normalized = param_dict['normalized']
-    print noise
+    print(noise)
     perc = param_dict['perc']
 
     if normalized:
@@ -305,8 +305,8 @@ def CI_sampler_regressor_v2(X_in,Y_in,Z_in,param_dict):
     Y1hat = MOR.predict(Z1)
     cov = np.cov(np.transpose(Y1hat - Y1))
 
-    print 'Calculated Covariance: ',
-    print cov 
+    print('Calculated Covariance: ',)
+    print(cov)
 
     nz1,mz1 = Z1.shape
 
@@ -326,7 +326,7 @@ def CI_sampler_regressor_v2(X_in,Y_in,Z_in,param_dict):
             mini = mae
             zsigma = s
 
-    print 'Selected Zsigma: ' + str(zsigma) 
+    print('Selected Zsigma: ' + str(zsigma))
 
 
     nz2,mz2 = Z2.shape
@@ -371,7 +371,7 @@ def CI_sampler_regressor_v3(X_in,Y_in,Z_in,param_dict):
     normalized = param_dict['normalized']
     max_epoch = param_dict['max_epoch']
     BSIZE = param_dict['BSIZE']
-    print noise
+    print(noise)
     perc = param_dict['perc']
     DIM = param_dict['DIM']
 
@@ -414,8 +414,8 @@ def CI_sampler_regressor_v3(X_in,Y_in,Z_in,param_dict):
     Y1hat = Y1hatT.data.numpy().reshape(Y1.shape)
     cov = np.cov(np.transpose(Y1hat - Y1))
 
-    print 'Calculated Covariance: ',
-    print cov 
+    print('Calculated Covariance: ',)
+    print(cov)
 
     mults = [1e-4,1e-3,1e-2,1e-1]
     sigmas = [l/np.sqrt(mz1) for l in mults]
@@ -437,7 +437,7 @@ def CI_sampler_regressor_v3(X_in,Y_in,Z_in,param_dict):
             mini = mae
             zsigma = s
 
-    print 'Selected Zsigma: ' + str(zsigma) 
+    print('Selected Zsigma: ' + str(zsigma))
 
 
     nz2,mz2 = Z2.shape
